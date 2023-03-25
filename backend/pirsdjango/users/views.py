@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login , logout
 from .serializers import UserSerializer
 from .models import User
 class UserRegisterView(generics.CreateAPIView):
@@ -34,6 +34,5 @@ class UserLogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
     def post(self, request):
-        request.user.auth_token.delete()
+        logout(request)
         return Response('User Logged out successfully')
-
