@@ -1,25 +1,25 @@
-from django.shortcuts import render
+import datetime
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
+from .models import Patient,MedicalData,EmergencyContact,FingerprintData
+from .serializers import PatientSerializer,MedicalDataSerializer,EmergencyContactSerializer,FingerprintDataSerializer
+from userprofile.models import Profile
+    
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from .models import Patient
+class PatientCreateView(generics.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PatientSerializer
+    queryset = Patient.objects.all()
 
-@csrf_exempt
-def fetch_records(request):
-    if request.method == 'POST':
-        # Get the biometric data from the Arduino
-        biometric_data = request.POST.get('biometric_data')
+    def post(self, request):
+        patient, _ = Patient.objects.get_or_create(id=request.data['id'])
+        serializer = PatientSerializer(patient, data=request.data)
+        if serializer.is_valid():
+            serializer.save(
+                last_updated_by=Profile.objects.get(user=request.user).name,
+                last_updated_time=datetime.datetime.now()
+                )  
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
-        # Look up the patient record by biometric data
-        try:
-            patient = Patient.objects.get(biometric_data=biometric_data)
-            data = {
-                'name': patient.name,
-                'age': patient.age,
-                'gender': patient.gender
-            }
-            return JsonResponse(data)
-        except Patient.DoesNotExist:
-            return JsonResponse({'error': 'Patient not found'})
-    else:
-        return JsonResponse({'error': 'Invalid request method'})

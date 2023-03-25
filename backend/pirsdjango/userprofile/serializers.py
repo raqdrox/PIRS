@@ -4,17 +4,17 @@ from .models import Profile
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ('id', 'bio', 'location')
+        fields = ('id', 'name', 'location')
     
     def create(self, validated_data):
         profile = Profile.objects.create(
-            bio=validated_data['bio'],
+            name=validated_data['name'],
             location=validated_data['location']
         )
         return profile
     
     def update(self, instance, validated_data):
-        instance.bio = validated_data.get('bio', instance.bio)
+        instance.name = validated_data.get('name', instance.name)
         instance.location = validated_data.get('location', instance.location)
         instance.save()
         return instance
