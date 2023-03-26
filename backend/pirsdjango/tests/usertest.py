@@ -32,12 +32,12 @@ auth_token=response.json()['token']
 '''
 print("update profile")
 data={
-    "name":"test",
+    "name":"test22",
     "address":"test address",
     "phone":"1234567890",
     "email":"test@test.com",
 }
-response=requests.post(url_profile_update,data=data,headers={'Authorization': 'Token '+auth_token})
+response=requests.put(url_profile_update,data=data,headers={'Authorization': 'Token '+auth_token})
 if response.status_code==200:
     print(response.json())
 else:
@@ -95,35 +95,36 @@ else:
     '''
 print("update patient")
 data={
-    "id":0,
-    "name":"test2",
-    "age":20,
-    "dob":"2021-01-01",
-    "gender":"Male",
-    'email':'test@test.test',
-    'phone':'1234567890',
-    'address':'test address',
-    "medical_data":{
-        'blood_group':'A+',
-        'diseases':'test disease',
-        'allergies':'test allergy',
-        'height':180,
-        'weight':80,
+    "id": 1,
+    "name": "sadasd",
+    "dob": "1222-12-12",
+    "age": 800,
+    "gender": "212",
+    "phone": "1212",
+    "email": "1212",
+    "address": "1212",
+    "last_updated_time": "2023-03-26T16:34:32.320485Z",
+    "last_updated_by": "dox's profile",
+    "medical_data": {
+        "blood_group": "12",
+        "diseases": "12",
+        "allergies": "12",
+        "height": 12,
+        "weight": 11,
     },
-    "emergency_contact":{
-        'name':'test emergency contact',
-        'phone':'1234567890',
+    "emergency_contact": {
+        "name": "12",
+        "phone": "12",
     },
-    "fingerprint_data":{
-        'fingerprint_data':'test fingerprint data',
-        }
-
+    "fingerprint_data": {
+        "fingerprint_data": "12",
+    },
 }
-response=requests.post(url_patient_update+"213122"+'/',data=data,headers={'Authorization': 'Token '+auth_token})
+response=requests.put(url_patient_update+'1/',data=data,headers={'Authorization': 'Token '+auth_token})
 if response.status_code==200:
     print(response.json())
 else:
-    print(response.json())
+    print(response)
 '''
 print("get patient by name")
 
@@ -143,6 +144,7 @@ else:
     print(response.json())
 
 '''
+
 
 
 

@@ -20,7 +20,7 @@ class ProfileUpdateView(generics.UpdateAPIView):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
 
-    def post(self, request):
+    def put(self, request):
         profile, _ = Profile.objects.get_or_create(user=request.user)
         serializer = ProfileSerializer(profile, data=request.data)
         if serializer.is_valid():

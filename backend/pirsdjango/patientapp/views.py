@@ -20,6 +20,7 @@ class PatientCreateView(generics.CreateAPIView):
                 last_updated_time=datetime.datetime.now()
                 )  
             return Response(serializer.data)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PatientUpdateView(generics.UpdateAPIView):
@@ -27,15 +28,14 @@ class PatientUpdateView(generics.UpdateAPIView):
     serializer_class = PatientSerializer
     queryset = Patient.objects.all()
 
-    def post(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         patient = Patient.objects.get(id=kwargs['pk'])
-        print(patient)
         serializer = PatientSerializer(patient, data=request.data)
         if serializer.is_valid():
             serializer.save(
-                last_updated_by=Profile.objects.get(user=request.user).name,
-                last_updated_time=datetime.datetime.now()
-                )  
+                    last_updated_by=Profile.objects.get(user=request.user).name,
+                    last_updated_time=datetime.datetime.now()
+                    )  
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
