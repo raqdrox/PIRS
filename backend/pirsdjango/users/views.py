@@ -18,10 +18,12 @@ class UserRegisterView(generics.CreateAPIView):
 
 class UserLoginView(generics.GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
+        print(username)
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
