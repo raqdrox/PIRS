@@ -28,7 +28,7 @@ class UserLoginView(generics.GenericAPIView):
             token, _ = Token.objects.get_or_create(user=user)
             return Response({'token': token.key})
         else:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response('Invalid credentials', status=status.HTTP_401_UNAUTHORIZED)
 
 class UserLogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]

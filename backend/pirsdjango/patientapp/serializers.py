@@ -63,9 +63,9 @@ class FingerprintDataSerializer(serializers.ModelSerializer):
 
     
 class PatientSerializer(serializers.ModelSerializer):
-    medical_data = MedicalDataSerializer()
-    emergency_contact = EmergencyContactSerializer()
-    fingerprint_data = FingerprintDataSerializer()
+    medical_data = MedicalDataSerializer(partial=True)
+    emergency_contact = EmergencyContactSerializer(partial=True)
+    fingerprint_data = FingerprintDataSerializer(partial=True)
     class Meta:
         model = Patient
         fields = ('id', 'name', 'dob','age', 'gender', 'phone', 'email', 'address','last_updated_time','last_updated_by', 'medical_data', 'emergency_contact', 'fingerprint_data')
@@ -93,7 +93,26 @@ class PatientSerializer(serializers.ModelSerializer):
         instance.address = validated_data.get('address', instance.address)
         instance.last_updated_time = validated_data.get('last_updated_time', instance.last_updated_time)
         instance.last_updated_by = validated_data.get('last_updated_by', instance.last_updated_by)
-        instance.save()
-        return instance
-    
+        
+        if 'medical_data' in validated_data:
+            medical = validated_data.pop('medical_data')
+            nested_medical_data_serializer = self.fields['medical_data']
+            nested_medical_instance = instance.medical_data
+            nested_medical_data_serializer.update(nested_medical_instance, medical)
+        
+        if 'emergency_contact' in validated_data:
+            emergency = validated_data.pop('emergency_contact')
+            nested_emergency_contact_serializer = self.fields['emergency_contact']
+            nested_emergency_instance = instance.emergency_contact
+            nested_emergency_contact_serializer.update(nested_emergency_instance, emergency)
+        
+        if 'fingerprint_data' in validated_data:
+            fingerprint = validated_data.pop('fingerprint_data')
+            nested_fingerprint_data_serializer = self.fields['fingerprint_data']
+            nested_fingerprint_instance = instance.fingerprint_data
+            nested_fingerprint_data_serializer.update(nested_fingerprint_instance, fingerprint)
+
+        return super(PatientSerializer, self).update(instance, validated_data)
+
+
     

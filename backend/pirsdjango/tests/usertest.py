@@ -17,17 +17,19 @@ data={
     "password":"qwerty",
     "email":"test@test.com"
 }
-'''
-print("registering")
+
+'''print("registering")
 response=requests.post(url_register,data=data)
 print(response.json())
 auth_token=response.json()['token']
-'''
 
+'''
 print("logging in")
 response=requests.post(url_login,data=data,headers={'Authorization': 'Token '+auth_token})
 print(response.json())
 auth_token=response.json()['token']
+
+'''
 print("update profile")
 data={
     "name":"test",
@@ -47,7 +49,7 @@ if response.status_code==200:
     print(response.json())
 else:
     print(response)
-'''
+
 print("create patient")
 data={
     "id":6969,
@@ -57,7 +59,9 @@ data={
     'email':'test@test.test',
     'phone':'1234567890',
     'address':'test address',
+    'gender':'male',
     'medical_data':{
+        'id':1,
         'blood_group':'A+',
         'diseases':'test disease',
         'allergies':'test allergy',
@@ -65,10 +69,12 @@ data={
         'weight':80,
     },
     'emergency_contact':{
+        'id':1,
         'name':'test emergency contact',
         'phone':'1234567890',
     },
     'fingerprint_data':{
+        'id':1,
         'fingerprint_data':'test fingerprint data',
         }
 
@@ -77,7 +83,7 @@ data={
 response=requests.post(url_patient_create,data=data,headers={'Authorization': 'Token '+auth_token})
 if response.status_code==200:
     print(response.json())
-'''
+
 
 print("get patient by id")
 
@@ -86,54 +92,57 @@ if response.status_code==200:
     print(response.json())
 else:
     print(response)
-    
+    '''
 print("update patient")
 data={
-    "id":6969,
+    "id":0,
     "name":"test2",
     "age":20,
     "dob":"2021-01-01",
+    "gender":"Male",
     'email':'test@test.test',
     'phone':'1234567890',
     'address':'test address',
-    'medical_data':{
+    "medical_data":{
         'blood_group':'A+',
         'diseases':'test disease',
         'allergies':'test allergy',
         'height':180,
         'weight':80,
     },
-    'emergency_contact':{
+    "emergency_contact":{
         'name':'test emergency contact',
         'phone':'1234567890',
     },
-    'fingerprint_data':{
+    "fingerprint_data":{
         'fingerprint_data':'test fingerprint data',
         }
 
 }
-response=requests.post(url_patient_update+"1"+'/',data=data,headers={'Authorization': 'Token '+auth_token})
+response=requests.post(url_patient_update+"213122"+'/',data=data,headers={'Authorization': 'Token '+auth_token})
 if response.status_code==200:
     print(response.json())
 else:
-    print(response)
-
+    print(response.json())
+'''
 print("get patient by name")
 
-response=requests.get(url_patient_getbyid+"asdasd"+'/',headers={'Authorization': 'Token '+auth_token})
+response=requests.get(url_patient_getbyname+"asdasd"+'/',headers={'Authorization': 'Token '+auth_token})
 if response.status_code==200:
     (response.json())
 else:
     print(response)
+
+
 print("get patient by fingerprint")
-data={'fingerprint_data':'test fingerprint data'}
-requests.post(url_patient_getbyfingerprint,data=data,headers={'Authorization': 'Token '+auth_token})
+data={'fingerprint_data':'adfg'}
+response =requests.post(url_patient_getbyfingerprint,data=data,headers={'Authorization': 'Token '+auth_token})
 if response.status_code==200:
     print(response.json())
 else:
-    print(response)
+    print(response.json())
 
-
+'''
 
 
 

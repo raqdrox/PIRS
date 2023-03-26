@@ -28,7 +28,8 @@ class PatientUpdateView(generics.UpdateAPIView):
     queryset = Patient.objects.all()
 
     def post(self, request, *args, **kwargs):
-        patient = Patient.objects.get(id=request.data['id'])
+        patient = Patient.objects.get(id=kwargs['pk'])
+        print(patient)
         serializer = PatientSerializer(patient, data=request.data)
         if serializer.is_valid():
             serializer.save(
@@ -45,26 +46,31 @@ class PatientGetView(generics.RetrieveAPIView):
     queryset = Patient.objects.all()
 
 
-class PatientGetByNameView(generics.ListAPIView):
+class PatientGetByNameView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PatientSerializer
     queryset = Patient.objects.all()
 
-    def get(self):
-        return self.queryset.filter(name__icontains=self.kwargs['name'])
+    def get(self, request, *args, **kwargs):
+        patient = Patient.objects.filter(name=kwargs['name'])
+        if patient:
+            serializer = PatientSerializer(patient, many=True)
+            return Response(serializer.data)
+       
+        return Response('Not Found', status=status.HTTP_400_BAD_REQUEST)
+    
 
-class PatientGetByFingerprintView(generics.ListAPIView):
+class PatientGetByFingerprintView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PatientSerializer
     queryset = Patient.objects.all()
 
     def post(self, request, *args, **kwargs):
-        patient = Patient.objects.filter(fingerprint_data__fingerprint_data=request.data['fingerprint_data'])
-        serializer = PatientSerializer(patient)
-
-        if serializer.is_valid():
+        fingerprintData = FingerprintData.objects.get(fingerprint_data=request.data['fingerprint_data'])
+        if fingerprintData:
+            patient = Patient.objects.get(fingerprint_data=fingerprintData) 
+            serializer = PatientSerializer(patient)
             return Response(serializer.data)
-        
-        return Response({'error': 'No patient found'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response('Not Found', status=status.HTTP_400_BAD_REQUEST)
     
     
