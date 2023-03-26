@@ -1,0 +1,97 @@
+    API Endpoint                 |           ViewName                              |          description
+
+
+/apis/patient/create/	                patientapp.views.PatientCreateView	            patient-create
+
+* means required
+POST => PatientData JSON 
+{
+    "id": integer*,
+    "name": string*,
+    "dob": string*,
+    "gender":string*,
+    "phone": string*,
+    "email": string*,
+    "address": string*,
+    "last_updated_by": string,
+    "medical_data": {
+        "blood_group": string,
+        "diseases": string,
+        "allergies": string,
+        "height": integer,
+        "weight": integer
+    },
+    "emergency_contact": {
+        "name": string,
+        "phone": string
+    },
+    "fingerprint_data": {
+        "fingerprint_data": string
+    }
+}
+
+
+/apis/patient/get/<int:id>/	            patientapp.views.PatientGetView	                patient-get
+GET
+Returns => PatientData JSON
+
+
+
+/apis/patient/getbyfingerprint/	        patientapp.views.PatientGetByFingerprintView	patient-getbyfingerprint
+POST => {'fingerprint_data':string}
+Returns => PatientData JSON
+
+
+
+/apis/patient/getbyname/<str:name>/	    patientapp.views.PatientGetByNameView	        patient-getbyname
+GET
+Returns => PatientData JSON
+
+
+
+/apis/patient/update/<int:id>/	        patientapp.views.PatientUpdateView	            patient-update
+POST => PatientData JSON
+
+
+
+
+/apis/users/auth/login/	                users.views.UserLoginView	                    user-login
+POST => {
+    "username":string,
+    "password":string
+}
+Returns => {'token':string}
+
+
+
+/apis/users/auth/logout/	            users.views.UserLogoutView	                    user-logout
+POST
+Returns => {logoutstatus}
+
+
+
+/apis/users/auth/register/	            users.views.UserRegisterView	                user-register
+POST => {
+    "username":string,
+    "password":string,
+    "email":string,
+}
+Returns => {'token':string}
+
+
+
+/apis/users/profile/update/	            userprofile.views.ProfileUpdateView	            user-profile
+POST => Profile JSON
+{
+    "name":string,
+    "address":string,
+    "phone":string,
+    "email":string
+}
+
+
+
+/apis/users/profile/view/	            userprofile.views.ProfileView	                user-profile
+POST
+Returns => Profile JSON
+

@@ -3,10 +3,10 @@ from .models import Profile
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'location')
-    list_filter = ('user', 'name', 'location')
-    search_fields = ('user', 'name', 'location')
-    ordering = ('user', 'name', 'location')
+    list_display = ('user', 'name', 'address', 'phone', 'email')
+    list_filter = ('user', 'name', 'address', 'phone', 'email')
+    search_fields = ('user', 'name', 'address', 'phone', 'email')
+    ordering = ('user', 'name', 'address', 'phone', 'email')
     filter_horizontal = ()
     list_per_page = 25
 
