@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Patient,MedicalData,EmergencyContact,FingerprintData
+from .models import Patient,MedicalData,EmergencyContact#,FingerprintData
 
 
 
@@ -44,7 +44,7 @@ class EmergencyContactSerializer(serializers.ModelSerializer):
         instance.phone = validated_data.get('phone', instance.phone)
         instance.save()
         return instance
-    
+'''    
 class FingerprintDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = FingerprintData
@@ -60,15 +60,15 @@ class FingerprintDataSerializer(serializers.ModelSerializer):
         instance.fingerprint_data = validated_data.get('fingerprint_data', instance.fingerprint_data)
         instance.save()
         return instance
-
+'''
     
 class PatientSerializer(serializers.ModelSerializer):
     medical_data = MedicalDataSerializer(partial=True)
     emergency_contact = EmergencyContactSerializer(partial=True)
-    fingerprint_data = FingerprintDataSerializer(partial=True)
+    #fingerprint_data = FingerprintDataSerializer(partial=True)
     class Meta:
         model = Patient
-        fields = ('id', 'name', 'dob','age', 'gender', 'phone', 'email', 'address','last_updated_time','last_updated_by', 'medical_data', 'emergency_contact', 'fingerprint_data')
+        fields = ('id', 'name', 'dob','age', 'gender', 'phone', 'email', 'address','last_updated_time','last_updated_by', 'medical_data', 'emergency_contact')#, 'fingerprint_data')
     
     def create(self, validated_data):
         patient= Patient.objects.create(
@@ -105,12 +105,12 @@ class PatientSerializer(serializers.ModelSerializer):
             nested_emergency_contact_serializer = self.fields['emergency_contact']
             nested_emergency_instance = instance.emergency_contact
             nested_emergency_contact_serializer.update(nested_emergency_instance, emergency)
-        
+        '''
         if 'fingerprint_data' in validated_data:
             fingerprint = validated_data.pop('fingerprint_data')
             nested_fingerprint_data_serializer = self.fields['fingerprint_data']
             nested_fingerprint_instance = instance.fingerprint_data
-            nested_fingerprint_data_serializer.update(nested_fingerprint_instance, fingerprint)
+            nested_fingerprint_data_serializer.update(nested_fingerprint_instance, fingerprint)'''
         
 
         return super(PatientSerializer, self).update(instance, validated_data)

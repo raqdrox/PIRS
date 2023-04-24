@@ -1,10 +1,11 @@
 import datetime
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from .models import Patient,MedicalData,EmergencyContact,FingerprintData
-from .serializers import PatientSerializer,MedicalDataSerializer,EmergencyContactSerializer,FingerprintDataSerializer
+from .models import Patient,MedicalData,EmergencyContact#,FingerprintData
+from .serializers import PatientSerializer,MedicalDataSerializer,EmergencyContactSerializer#,FingerprintDataSerializer
 from userprofile.models import Profile
-from biometricApi.models import FingerprintIdMapping
+from biometricApi.models import PatientIdMapping
+from biometricApi.serializers import PatientIdMappingSerializer
     
 
 class PatientCreateView(generics.CreateAPIView):
@@ -13,6 +14,8 @@ class PatientCreateView(generics.CreateAPIView):
     queryset = Patient.objects.all()
 
     def post(self, request):
+        pidmap=  request.data.pop('pidmap')
+
         patient, _ = Patient.objects.get_or_create(id=request.data['id'])
         serializer = PatientSerializer(patient, data=request.data)
         if serializer.is_valid():
@@ -20,7 +23,19 @@ class PatientCreateView(generics.CreateAPIView):
                 last_updated_by=Profile.objects.get(user=request.user).name,
                 last_updated_time=datetime.datetime.now()
                 )  
-            return Response(serializer.data)
+            
+            #create patient id mapping
+            patient_id_mapping,_ = PatientIdMapping.objects.get_or_create(finger_id=pidmap)
+            patient_id_mapping.finger_id=pidmap
+            patient_id_mapping.patient_id = patient.id
+            serializer = PatientIdMappingSerializer(patient_id_mapping)
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                patient.delete()
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -40,6 +55,25 @@ class PatientUpdateView(generics.UpdateAPIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PatientDeleteView(generics.DestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PatientSerializer
+    queryset = Patient.objects.all()
+
+    def delete(self, request, *args, **kwargs):
+        patient = Patient.objects.get(id=kwargs['pk'])
+        
+        #delete patient id mapping
+        patient_id_mapping = PatientIdMapping.objects.get(id=patient.id)
+        patient_id_mapping.delete()
+
+        patient.delete()
+        return Response('Deleted', status=status.HTTP_204_NO_CONTENT)
+
+class PatientListView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PatientSerializer
+    queryset = Patient.objects.all()
 
 class PatientGetView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -60,7 +94,8 @@ class PatientGetByNameView(generics.RetrieveAPIView):
        
         return Response('Not Found', status=status.HTTP_400_BAD_REQUEST)
     
-    
+
+'''    
 class PatientFingerprintAddView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Patient.objects.all()
@@ -79,3 +114,4 @@ class PatientFingerprintAddView(generics.CreateAPIView):
         serializer = PatientSerializer(patient)
         return Response(serializer.data)
     
+'''

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import FingerprintIdMapping
+from .models import FingerprintIdMapping,PatientIdMapping
 
 class FingerprintIdMappingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,6 +20,19 @@ class FingerprintIdMappingSerializer(serializers.ModelSerializer):
     def delete(self, instance):
         instance.delete()
         return instance
+    
+
+class PatientIdMappingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PatientIdMapping
+        fields = '__all__'
+
+    def create(self, validated_data):
+        patient_id_mapping = PatientIdMapping.objects.create(
+            patient_id=validated_data['patient_id'],
+            finger_id=validated_data['finger_id']
+        )
+        return patient_id_mapping
     
 
 
