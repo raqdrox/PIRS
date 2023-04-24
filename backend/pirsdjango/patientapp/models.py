@@ -34,6 +34,8 @@ class MedicalData(models.Model):
     height = models.IntegerField(default=0,blank=True)
     weight = models.IntegerField(default=0,blank=True)
 
+    
+
     def __str__(self):
         return self.patient.name
     

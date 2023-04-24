@@ -95,3 +95,10 @@ POST => Profile JSON
 POST
 Returns => Profile JSON
 
+/apis/patient/fingerprint/add/
+POST => 
+{
+    "patient_id":int,
+    "fingerprint_id":int
+}
+

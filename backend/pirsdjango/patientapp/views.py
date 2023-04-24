@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .models import Patient,MedicalData,EmergencyContact,FingerprintData
 from .serializers import PatientSerializer,MedicalDataSerializer,EmergencyContactSerializer,FingerprintDataSerializer
 from userprofile.models import Profile
+from biometricApi.models import FingerprintIdMapping
     
 
 class PatientCreateView(generics.CreateAPIView):
@@ -59,18 +60,22 @@ class PatientGetByNameView(generics.RetrieveAPIView):
        
         return Response('Not Found', status=status.HTTP_400_BAD_REQUEST)
     
-
-class PatientGetByFingerprintView(generics.RetrieveAPIView):
+    
+class PatientFingerprintAddView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = PatientSerializer
     queryset = Patient.objects.all()
 
-    def post(self, request, *args, **kwargs):
-        fingerprintData = FingerprintData.objects.get(fingerprint_data=request.data['fingerprint_data'])
-        if fingerprintData:
-            patient = Patient.objects.get(fingerprint_data=fingerprintData) 
-            serializer = PatientSerializer(patient)
-            return Response(serializer.data)
-        return Response('Not Found', status=status.HTTP_400_BAD_REQUEST)
-    
+    def post(self, request):
+        patient = Patient.objects.get(id=request.data['patient_id'])
+        
+        
+        fingerprintIdMapping, created = FingerprintIdMapping.objects.get_or_create(id=request.data['fingerprint_store_id'])      
+        if created:
+            return Response('Fingerprint Store Id not found', status=status.HTTP_400_BAD_REQUEST)
+        fprint,_ = FingerprintData.objects.get_or_create(patient_id=patient.id)
+        fprint.fingerprint_data = fingerprintIdMapping.fingerprint
+        patient.fingerprint_data = fprint
+        patient.save()
+        serializer = PatientSerializer(patient)
+        return Response(serializer.data)
     

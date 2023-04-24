@@ -111,6 +111,7 @@ class PatientSerializer(serializers.ModelSerializer):
             nested_fingerprint_data_serializer = self.fields['fingerprint_data']
             nested_fingerprint_instance = instance.fingerprint_data
             nested_fingerprint_data_serializer.update(nested_fingerprint_instance, fingerprint)
+        
 
         return super(PatientSerializer, self).update(instance, validated_data)
 
