@@ -14,30 +14,28 @@ class PatientCreateView(generics.CreateAPIView):
     queryset = Patient.objects.all()
 
     def post(self, request):
-        pidmap=  request.data.pop('pidmap')
-
-        patient, _ = Patient.objects.get_or_create(id=request.data['id'])
-        serializer = PatientSerializer(patient, data=request.data)
+        serializer = PatientSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(
-                last_updated_by=Profile.objects.get(user=request.user).name,
-                last_updated_time=datetime.datetime.now()
-                )  
+            patient = serializer.save(
+                    last_updated_by=Profile.objects.get(user=request.user).name,
+                    last_updated_time=datetime.datetime.now()
+                    
+                    )
+            patient_id_mapping,_ = PatientIdMapping.objects.get_or_create(finger_id=request.data['finger_id'])
+
             
-            #create patient id mapping
-            patient_id_mapping,_ = PatientIdMapping.objects.get_or_create(finger_id=pidmap)
-            patient_id_mapping.finger_id=pidmap
-            patient_id_mapping.patient_id = patient.id
-            serializer = PatientIdMappingSerializer(patient_id_mapping)
-            if serializer.is_valid():
-                serializer.save()
-            else:
+
+            if patient_id_mapping.patient_id != -1:
                 patient.delete()
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
-        
+                return Response('Finger ID already exists', status=status.HTTP_400_BAD_REQUEST)       
+
+            patient_id_mapping.patient_id = patient.id         
+            patient_id_mapping.save()
+            return Response('Created', status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 class PatientUpdateView(generics.UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]

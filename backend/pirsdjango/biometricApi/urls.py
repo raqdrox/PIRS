@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import FingerprintStoreView, FingerprintGetAvailableIDView,PatientByFingerprintIDView,ClearUnusedPatientIdMapping,DebugView
+from .views import FingerprintStoreView, FingerprintGetAvailableIDView,PatientByFingerprintIDView,ClearUnusedPatientIdMapping
 
 
 
@@ -10,7 +10,6 @@ urlpatterns = [
     path('fingerprints/getavailableid/', FingerprintGetAvailableIDView.as_view(), name='fingerprint-getavailableid'),
     path('fingerprints/getpatientfromfid/<int:finger_id>/', PatientByFingerprintIDView.as_view(), name='fingerprint-getpatient'),
     path('fingerprints/clearunused/', ClearUnusedPatientIdMapping.as_view(), name='fingerprint-clearunused'),
-    path('fingerprints/debug/', DebugView.as_view(), name='fingerprint-debug'),
 
 
 

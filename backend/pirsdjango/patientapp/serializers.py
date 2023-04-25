@@ -82,6 +82,14 @@ class PatientSerializer(serializers.ModelSerializer):
             last_updated_time=validated_data['last_updated_time'],
             last_updated_by=validated_data['last_updated_by'],
         )
+        medical_data = validated_data.pop('medical_data')
+        emergency_contact = validated_data.pop('emergency_contact')
+
+        MedicalData.objects.create(patient=patient, **medical_data)
+        EmergencyContact.objects.create(patient=patient, **emergency_contact)
+        
+
+
         return patient
     
     def update(self, instance, validated_data):

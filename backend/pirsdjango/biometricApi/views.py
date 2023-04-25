@@ -57,6 +57,7 @@ class FingerprintGetAvailableIDView(APIView):
 
     def get(self, request):
         data=self.queryset.values_list('finger_id',flat=True)
+
         print("data: ",data)
 
 
@@ -76,9 +77,8 @@ class FingerprintGetAvailableIDView(APIView):
         
 
 
-        newPatientIdMapping = PatientIdMapping.objects.create()
 
-        serializer = self.serializer_class(newPatientIdMapping, data={'finger_id':foundid,'patient_id':-1})
+        serializer = PatientIdMappingSerializer(data={'finger_id':foundid,'patient_id':-1})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data.get('finger_id'))
@@ -121,18 +121,3 @@ class ClearUnusedPatientIdMapping(APIView):
         
         return Response('Done', status=status.HTTP_200_OK)
 
-        
-
-
-
-class DebugView(APIView):
-    def get(self, request, *args, **kwargs):
-
-        pmap=PatientIdMapping.objects.get(finger_id=10)
-        pid=10
-        pmap.patient_id=pid
-        pmap.save()
-        
-        return Response('Debug', status=status.HTTP_200_OK)
-
-        

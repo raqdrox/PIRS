@@ -6,7 +6,7 @@ class FingerprintIdMapping(models.Model):
     fingerprint = models.TextField(blank=True)
 
 class PatientIdMapping(models.Model):
-    finger_id=models.IntegerField(blank=True,default=-1)
+    finger_id=models.IntegerField(unique=True)
     patient_id = models.IntegerField(blank=True,default=-1)
 
 
