@@ -5,6 +5,16 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../token-service.service';
 import { Token } from '@angular/compiler';
 import { map } from 'rxjs';
+import {
+  faDashboard,
+  faLocation,
+  faShop,
+  faBox,
+  faMoneyBill,
+  faChartBar,
+  faContactBook,
+  faHand,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +27,15 @@ export class DashboardComponent {
     phone : string;
     email : string;
 
+    faDashboard = faDashboard;
+  faLocation = faLocation;
+  faShop = faShop;
+  faBox = faBox;
+  faMoneyBill = faMoneyBill;
+  faChartBar = faChartBar;
+  faContactBook = faContactBook;
+  faHand = faHand;
+
 
     constructor(
       private formBuilder: FormBuilder,
@@ -28,7 +47,7 @@ export class DashboardComponent {
 
     fetch(){
       this.http.get("http://127.0.0.1:8000/apis/users/profile/view/").subscribe((response)=>{console.log(response)
-      this.name=response["name"];
+      
     
     });
       

@@ -7,19 +7,16 @@ import { Token } from '@angular/compiler';
 import { map } from 'rxjs';
 import { Input, Output, EventEmitter } from '@angular/core';
 
-
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
-  email: string;
+export class RegisterComponent implements OnInit {
+
+  Username: string;
   password: string;
-  token : any;
-  loginForm: FormGroup;
-  submitted = false;
+  Email: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,30 +25,27 @@ export class LoginComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit() {}
-   
+  ngOnInit(): void {
+      
+  }
 
-  // convenience getter for easy access to form fields
-  
-
-  login() {
-    let body={username:this.email,password:this.password};
+  Register() {
+    let body={username:this.Username,password:this.password,email:this.Email};
     console.log(body);
-    this.http.post("http://127.0.0.1:8000/apis/users/auth/login/", body).pipe(map((response:any)=>response.token)).subscribe(token=>{
+    this.http.post("http://127.0.0.1:8000/apis/users/auth/register/", body).pipe(map((response:any)=>response.token)).subscribe(token=>{
     this.authService.setToken(token);
-
+    console.log(token);
     this.router.navigate(['/dashboard']);
-    
+    //this.http.get("http://127.0.0.1:8000/apis/users/profile/view/").subscribe((response)=>{console.log(response)});
     },error=>{});
     
   
 }
 
-
-
   @Input() error: string | null;
 
   @Output() submitEM = new EventEmitter(); 
+
+  register(){}
+
 }
-
-
