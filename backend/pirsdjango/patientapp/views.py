@@ -50,7 +50,20 @@ class PatientUpdateView(generics.UpdateAPIView):
                     last_updated_by=Profile.objects.get(user=request.user).name,
                     last_updated_time=datetime.datetime.now()
                     )  
-            return Response(serializer.data)
+            
+            #-----------------------PID MAP-----------------------
+            patient_id_mapping,_ = PatientIdMapping.objects.get_or_create(finger_id=request.data['finger_id'])
+            if patient_id_mapping.patient_id != -1:
+                
+                return Response("Invalid Finger ID. Using old mapping",status=status.HTTP_200_OK)
+            
+            patient_id_mapping_old=PatientIdMapping.objects.get(patient_id=patient.id)
+            patient_id_mapping.patient_id=patient.id
+            patient_id_mapping.save()
+            patient_id_mapping_old.delete()
+            #-----------------------------------------------------
+
+            return Response("Updated",status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PatientDeleteView(generics.DestroyAPIView):
