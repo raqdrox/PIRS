@@ -22,5 +22,11 @@ urlpatterns = [
     path('apis/users/auth/', include('users.urls')),
     path('apis/users/profile/', include('userprofile.urls')),
     path('apis/patient/', include('patientapp.urls')),
+    path('apis/mcu/', include('biometricApi.urls')),
+    path('debug/', include('debugApp.urls')),
+
+    
+
+
     
 ]

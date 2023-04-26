@@ -34,6 +34,8 @@ class MedicalData(models.Model):
     height = models.IntegerField(default=0,blank=True)
     weight = models.IntegerField(default=0,blank=True)
 
+    
+
     def __str__(self):
         return self.patient.name
     
@@ -44,9 +46,11 @@ class EmergencyContact(models.Model):
 
     def __str__(self):
         return self.name
-    
+'''
 class FingerprintData(models.Model):
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE,related_name='fingerprint_data')
     fingerprint_data = models.TextField(blank=True)
     def __str__(self):
         return self.patient.name
+        
+'''
