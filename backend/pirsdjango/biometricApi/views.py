@@ -58,9 +58,6 @@ class FingerprintGetAvailableIDView(APIView):
     def get(self, request):
         data=self.queryset.values_list('finger_id',flat=True)
 
-        print("data: ",data)
-
-
         #get next available finger_id from db including gaps
         data=list(data)
         data.sort()
@@ -68,7 +65,6 @@ class FingerprintGetAvailableIDView(APIView):
 
         #find first gap
         for i in range(len(data)):
-            print("i: ",i,"data[i]: ",data[i],"i!=data[i]: ",i!=data[i],"foundid: ",foundid)
             if data[i]!=i:
                 foundid=i
                 break
@@ -81,7 +77,7 @@ class FingerprintGetAvailableIDView(APIView):
         serializer = PatientIdMappingSerializer(data={'finger_id':foundid,'patient_id':-1})
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data.get('finger_id'))
+            return Response({"id":serializer.data.get('finger_id')})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
