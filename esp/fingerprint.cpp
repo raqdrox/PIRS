@@ -5,6 +5,8 @@ Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
 
 bool initFingerprint(){
+  Serial.println("Init Finger");
+
   finger.begin(57600);
 
   if (!finger.verifyPassword()) {
@@ -26,7 +28,7 @@ uint8_t getFingerprintEnroll(uint8_t id) {
       Serial.println("Image taken");
       break;
     case FINGERPRINT_NOFINGER:
-      Serial.println(".");
+      Serial.print(".");
       break;
     case FINGERPRINT_PACKETRECIEVEERR:
       Serial.println("Communication error");
@@ -157,25 +159,12 @@ uint8_t getFingerprintEnroll(uint8_t id) {
 }
 
 
-uint8_t getFingerprintID() {
-  uint8_t p = finger.getImage();
-  switch (p) {
-    case FINGERPRINT_OK:
-      Serial.println("Image taken");
-      break;
-    case FINGERPRINT_NOFINGER:
-      Serial.println("No finger detected");
-      return p;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      Serial.println("Communication error");
-      return p;
-    case FINGERPRINT_IMAGEFAIL:
-      Serial.println("Imaging error");
-      return p;
-    default:
-      Serial.println("Unknown error");
-      return p;
+int getFingerprintID() {
+  uint8_t p =-1;
+  while (p!=FINGERPRINT_OK) {
+  p = finger.getImage();
   }
+  
 
   // OK success!
 
@@ -184,36 +173,18 @@ uint8_t getFingerprintID() {
     case FINGERPRINT_OK:
       Serial.println("Image converted");
       break;
-    case FINGERPRINT_IMAGEMESS:
-      Serial.println("Image too messy");
-      return p;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      Serial.println("Communication error");
-      return p;
-    case FINGERPRINT_FEATUREFAIL:
-      Serial.println("Could not find fingerprint features");
-      return p;
-    case FINGERPRINT_INVALIDIMAGE:
-      Serial.println("Could not find fingerprint features");
-      return p;
     default:
       Serial.println("Unknown error");
-      return p;
+      return -1;
   }
 
   // OK converted!
   p = finger.fingerSearch();
   if (p == FINGERPRINT_OK) {
     Serial.println("Found a print match!");
-  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
-    Serial.println("Communication error");
-    return p;
-  } else if (p == FINGERPRINT_NOTFOUND) {
-    Serial.println("Did not find a match");
-    return p;
-  } else {
-    Serial.println("Unknown error");
-    return p;
+  }  else {
+    Serial.println("No Match Found");
+    return -2;
   }
 
   // found a match!
@@ -221,4 +192,7 @@ uint8_t getFingerprintID() {
   Serial.print(" with confidence of "); Serial.println(finger.confidence);
 
   return finger.fingerID;
+}
+void deleteAll(){
+    finger.emptyDatabase();
 }

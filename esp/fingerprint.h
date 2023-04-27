@@ -5,6 +5,6 @@
 bool initFingerprint();
 
 uint8_t getFingerprintEnroll(uint8_t id);
-uint8_t getFingerprintID();
-
+int getFingerprintID();
+void deleteAll();
 #endif

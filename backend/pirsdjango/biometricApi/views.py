@@ -87,6 +87,8 @@ class PatientByFingerprintIDView(APIView):
     serializer_class = PatientIdMappingSerializer
 
     def get(self, request, *args, **kwargs):
+        if kwargs['finger_id'] == -1:
+            return Response('Not Found', status=status.HTTP_400_BAD_REQUEST)
         patient_id_mapping,created= PatientIdMapping.objects.get_or_create(finger_id=kwargs['finger_id'])
 
         if not created:

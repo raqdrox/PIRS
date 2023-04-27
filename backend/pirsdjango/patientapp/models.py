@@ -18,9 +18,9 @@ class Patient(models.Model):
         import datetime
         today = datetime.date.today()
         if self.dob:
-            return today.year - self.dob.year - ((today.month, today.day) < (self.dob.month, self.dob.day))
+            return str(today.year - self.dob.year - ((today.month, today.day) < (self.dob.month, self.dob.day)))
         else:
-            return 0
+            return "0"
     def __str__(self):
         return self.name
     

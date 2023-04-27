@@ -10,7 +10,7 @@
 
 bool initDisplay();
 void printTextToDisplay(String text,bool clear=false);
-void printPatientData(struct Patient patient,bool clear=false);
-
+void printPatientData(struct Patient patient);
+void clearScreen();
 
 #endif

@@ -8,7 +8,7 @@
 #include <Arduino_JSON.h>
 
 bool initWifi();
-JSONVar fetchPatientData(int id,WiFiClient client,String url,String token);
-int FetchAvailableFingerID(WiFiClient client,String url,String token);
+JSONVar fetchPatientData(int id);
+int fetchAvailableFingerID();
 
 #endif

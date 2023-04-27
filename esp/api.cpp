@@ -4,16 +4,20 @@
 //----------------API and WIFI----------------
 ESP8266WiFiMulti WiFiMulti;
 
-const char* ssid = "ssid";
-const char* password = "pass";
+const char* ssid = "Frost";
+const char* password = "karan@123";
 
 String token="Token cb6fd4778f21f2ac38b15423e445828bf029e7a6";
 String fetch_patient_url = "http://192.168.1.12:8000/apis/mcu/fingerprints/getpatientfromfid/";
 String fetch_available_fingerid_url = "http://192.168.1.12:8000/apis/mcu/fingerprints/getavailableid/";
+String clear_unused_ids = "http://192.168.1.12:8000/apis/mcu/fingerprints/clearunused/";
+
 //-------------------------------------------
 
 
 bool initWifi(){
+  Serial.println("Init Wifi");
+
   WiFi.mode(WIFI_STA);
   WiFiMulti.addAP(ssid, password);
   return true;
@@ -52,7 +56,7 @@ JSONVar fetchPatientData(int id){
   
 }
 
-int FetchAvailableFingerID(){
+int fetchAvailableFingerID(){
   int id = -1;
   if ((WiFiMulti.run() == WL_CONNECTED)) {
     WiFiClient client;
