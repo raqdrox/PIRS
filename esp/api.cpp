@@ -6,8 +6,8 @@
 //----------------API and WIFI----------------
 ESP8266WiFiMulti WiFiMulti;
 
-const char* ssid = "Frost";
-const char* password = "karan@123";
+const char* ssid = "ssid";
+const char* password = "pass";
 
 String token="Token cb6fd4778f21f2ac38b15423e445828bf029e7a6";
 String fetch_patient_url = "http://192.168.1.12:8000/apis/mcu/fingerprints/getpatientfromfid/";
