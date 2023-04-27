@@ -16,6 +16,16 @@ import {MatButtonModule} from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UpdateprofileComponent } from './updateprofile/updateprofile.component';
+import { AddpatientComponent } from './addpatient/addpatient.component';
+import { ViewpatientComponent } from './viewpatient/viewpatient.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import { UpdatepatientComponent } from './updatepatient/updatepatient.component';
+import { LogoutComponent } from './logout/logout.component';
+
+
 
 
 
@@ -25,13 +35,18 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     LoginComponent,
     DashboardComponent,
     RegisterComponent,
+    UpdateprofileComponent,
+    AddpatientComponent,
+    ViewpatientComponent,
+    UpdatepatientComponent,
+    LogoutComponent,
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,MatCardModule,MatInputModule,MatButtonModule,FormsModule,BrowserAnimationsModule,FontAwesomeModule
+    ReactiveFormsModule,MatTableModule,
+    HttpClientModule,MatCardModule,MatInputModule,MatButtonModule,FormsModule,BrowserAnimationsModule,FontAwesomeModule,MatFormFieldModule,MatSelectModule
   ],
   providers: [{provide:HTTP_INTERCEPTORS,
                 useClass:AuthInterceptor,

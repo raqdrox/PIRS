@@ -1,0 +1,116 @@
+<div class="container">
+    <div class="header">
+        
+            <div class="logo">View Patient Data</div>
+            <div class="user">
+              <div class="user-name"></div>
+              
+            </div>
+          </div>
+    </div>
+    <div class="main-container">
+      <div class="side-nav">
+        <div class="nav-items">
+          <div class="nav-item">
+    
+            <span routerLink="/dashboard">Profile </span>
+          </div>
+          <div class="nav-item">
+            
+            <span routerLink="/viewpatient">View Patient</span>
+          </div>
+          <div class="nav-item">
+            
+            <span routerLink="/addpatient">Add Patient</span>
+          </div>
+          <div class="nav-item">
+            
+            <span routerLink="/updatepatient">Update Patient</span>
+          </div>
+          <div class="nav-item">
+            
+            <span routerLink="/logout">Log out</span>
+          </div>
+</div>
+      </div>
+      <div class="main">
+        
+          <mat-form-field   class="input" appearance="fill">
+            <mat-label>Enter id</mat-label>
+            <input matInput [(ngModel)] ="id">
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="submit2()">Submit</button>
+
+        
+          
+        
+        <div class="profile">
+
+            <table>
+                <tr>
+                  <td>ID:</td>
+                  <td>{{ pdata.id }}</td>
+                </tr>
+                <tr>
+                  <td>Name:</td>
+                  <td>{{ pdata.name }}</td>
+                </tr>
+                <tr>
+                  <td>Date of Birth:</td>
+                  <td>{{ pdata.dob }}</td>
+                </tr>
+                <tr>
+                  <td>Gender:</td>
+                  <td>{{ pdata.gender }}</td>
+                </tr>
+                <tr>
+                  <td>Phone:</td>
+                  <td>{{ pdata.phone }}</td>
+                </tr>
+                <tr>
+                  <td>Email:</td>
+                  <td>{{ pdata.email }}</td>
+                </tr>
+                <tr>
+                  <td>Address:</td>
+                  <td>{{ pdata.address }}</td>
+                </tr>
+                <tr>
+                  <td>Last Updated By:</td>
+                  <td>{{ pdata.last_updated_by }}</td>
+                </tr>
+                <tr>
+                  <td>Blood Group:</td>
+                  <td>{{ pdata.medical_data?.blood_group }}</td>
+                </tr>
+                <tr>
+                  <td>Diseases:</td>
+                  <td>{{ pdata.medical_data?.diseases }}</td>
+                </tr>
+                <tr>
+                  <td>Allergies:</td>
+                  <td>{{ pdata.medical_data?.allergies }}</td>
+                </tr>
+                <tr>
+                  <td>Height:</td>
+                  <td>{{ pdata.medical_data?.height }}</td>
+                </tr>
+                <tr>
+                  <td>Weight:</td>
+                  <td>{{ pdata.medical_data?.weight }}</td>
+                </tr>
+                <tr>
+                  <td>Emergency Contact Name:</td>
+                  <td>{{ pdata.emergency_contact?.name }}</td>
+                </tr>
+                <tr>
+                  <td>Emergency Contact Phone:</td>
+                  <td>{{ pdata.emergency_contact?.phone }}</td>
+                </tr>
+              </table>
+
+
+        </div>
+        
+      </div>
+    </div>

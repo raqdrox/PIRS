@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="header">
+        
+            <div class="logo">Update Patient Data</div>
+            <div class="user">
+              <div class="user-name"></div>
+              
+            </div>
+          </div>
+    </div>
+    <div class="main-container">
+      <div class="side-nav">
+        <div class="nav-items">
+          <div class="nav-item">
+    
+            <span routerLink="/dashboard">Profile </span>
+          </div>
+          <div class="nav-item">
+            
+            <span routerLink="/viewpatient">View Patient</span>
+          </div>
+          <div class="nav-item">
+            
+            <span routerLink="/addpatient">Add Patient</span>
+          </div>
+          <div class="nav-item">
+            
+            <span routerLink="/updatepatient">Update Patient</span>
+          </div>
+          <div class="nav-item">
+            
+            <span routerLink="/logout">Log out</span>
+          </div>
+</div>
+      </div>
+      <div class="main">
+        <mat-form-field   class="input" appearance="fill">
+          <mat-label>Enter Old id</mat-label>
+          <input matInput [(ngModel)] ="oid">
+        </mat-form-field>
+          
+
+        <form >
+
+            <label for="id"> New ID:</label>
+            <input type="number" id="id" name="id" required [(ngModel)] ="id">
+            
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required [(ngModel)] ="name">
+          
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required [(ngModel)] ="dob">
+            
+          
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required [(ngModel)] ="gender">
+              <option value="">--Please select--</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required [(ngModel)] ="phone">
+          
+            <label for="email">Email Address:</label>
+            <input type="text" id="email" name="email" required [(ngModel)] ="email">
+          
+            <label for="address">Address:</label>
+            <textarea id="text" name="address" required [(ngModel)] ="address"></textarea>
+          
+           
+          
+            <fieldset>
+              <legend>Medical Data:</legend>
+              <label for="blood_group">Blood Group:</label>
+              <input type="text" id="blood_group" name="blood_group" [(ngModel)] ="blood_group">
+          
+              <label for="diseases">Diseases:</label>
+              <input type="text" id="diseases" name="diseases" [(ngModel)] ="diseases">
+          
+              <label for="allergies">Allergies:</label>
+              <input type="text" id="allergies" name="allergies" [(ngModel)] ="allergies">
+          
+              <label for="height">Height:</label>
+              <input type="number" id="height" name="height"  [(ngModel)] ="height">
+          
+              <label for="weight">Weight:</label>
+              <input type="number" id="weight" name="weight"  [(ngModel)] ="weight" >
+            </fieldset>
+          
+            <fieldset>
+              <legend>Emergency Contact:</legend>
+              <label for="emergency_contact_name">Name:</label>
+              <input type="text" id="emergency_contact_name" name="emergency_contact_name" [(ngModel)] ="name2">
+          
+              <label for="emergency_contact_phone">Phone:</label>
+              <input type="text" id="emergency_contact_phone" name="emergency_contact_phone"[(ngModel)] ="phone2">
+            </fieldset>
+          
+            
+            <button mat-raised-button color="primary" (click)="Submit()">Submit</button>
+            
+          </form>
+        
+       
+        
+      </div>
+    </div>
+
+
+

@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="header">
+        
+            <div class="logo">User Profile Update</div>
+            <div class="user">
+              <div class="user-name"></div>
+              
+            </div>
+          </div>
+    </div>
+    <div class="main-container">
+      <div class="side-nav">
+        <div class="nav-items">
+  <div class="nav-item">
+    
+    <span  routerLink="/dashboard">Profile </span>
+  </div>
+  <div class="nav-item">
+    
+    <span routerLink="/viewpatient" >View Patient</span>
+  </div>
+  <div class="nav-item">
+    
+    <span routerLink="/addpatient">Add Patient</span>
+  </div>
+  <div class="nav-item">
+    
+    <span routerLink="/updatepatient">Update Patient</span>
+  </div>
+  <div class="nav-item">
+    
+    <span routerLink="/logout">Log out</span>
+  </div>
+
+</div>
+      </div>
+      <div class="main">
+        <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+            <mat-card class="box">
+              <mat-card-header>
+                <mat-card-title>Update Profile</mat-card-title>
+              </mat-card-header>
+              <form class="example-form">
+                <mat-card-content>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Enter your name" name="username"
+                    [(ngModel)] ="name">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Enter Email" name="Email"
+                    [(ngModel)] ="email">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Enter Address" name="Password"
+                    [(ngModel)] ="address">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Phone.no</mat-label>
+                    <input matInput placeholder="Enter Address" name="Password"
+                    [(ngModel)] ="phone">
+                  </mat-form-field>
+        
+                <button mat-raised-button color="primary" (click)="Submit()" >Submit</button>
+                
+              
+                </mat-card-content>
+                
+              </form>
+            </mat-card>
+          </div>
+
+        
+      </div>
+    </div>
+
+

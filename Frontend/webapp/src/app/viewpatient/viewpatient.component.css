@@ -78,7 +78,7 @@
   .profile {  
     display: flex;
     flex-direction: column;
-    align-items: center;
+    
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -103,10 +103,70 @@
   .main {
     padding: 30px;
     width:2500px;
-    justify-content:center;
-     
     
   }
+
+  .input{
+    width: 200px;
+    padding: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tr:hover {
+    background-color: #ddd;
+  }
+  
+  @media screen and (max-width: 768px) {
+    /* Responsive styles */
+    table {
+      font-size: 14px;
+    }
+    th, td {
+      display: block;
+      width: 100%;
+    }
+    th {
+      text-align: center;
+      background-color: #ddd;
+    }
+    td {
+      text-align: center;
+      border: none;
+      position: relative;
+      padding-left: 50%;
+    }
+    td:before {
+      position: absolute;
+      left: 6px;
+      content: attr(data-label);
+      text-align: left;
+      font-weight: bold;
+    }
+  }
+
   
 
 

@@ -8,7 +8,7 @@ class Patient(models.Model):
     gender = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     email= models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=1000)
 
     last_updated_time = models.DateTimeField(auto_now=True)
     last_updated_by = models.CharField(max_length=100,blank=True)
@@ -28,8 +28,8 @@ class Patient(models.Model):
 class MedicalData(models.Model):
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE,related_name='medical_data')
     blood_group = models.CharField(max_length=100,blank=True)
-    diseases = models.CharField(max_length=100,blank=True)
-    allergies = models.CharField(max_length=100,blank=True)
+    diseases = models.CharField(max_length=1000,blank=True)
+    allergies = models.CharField(max_length=1000,blank=True)
 
     height = models.IntegerField(default=0,blank=True)
     weight = models.IntegerField(default=0,blank=True)
