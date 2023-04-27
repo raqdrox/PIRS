@@ -15,7 +15,7 @@ bool initFingerprint(){
 
 }
 
-uint8_t getFingerprintEnroll(uint8_t id,Adafruit_Fingerprint finger) {
+uint8_t getFingerprintEnroll(uint8_t id) {
 
   int p = -1;
   Serial.print("Waiting for valid finger");

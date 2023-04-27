@@ -1,5 +1,3 @@
-#include "core_esp8266_features.h"
-#include "HardwareSerial.h"
 #include "api.h"
 
 
