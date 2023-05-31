@@ -54,7 +54,9 @@ bool enrollFingerprint(){
     delay(100);
     while (!getFingerprintEnroll(fingerID))
     ;
-    printTextToDisplay("Enrolled ID : "+fingerID,true);
+    delay(1000);
+    printTextToDisplay("",true);
+    printTextToDisplay("_Enrolled ID : "+String(fingerID),true);
 
     delay(10000);
     return true;

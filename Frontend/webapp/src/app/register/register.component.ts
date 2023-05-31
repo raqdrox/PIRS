@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     this.http.post("http://127.0.0.1:8000/apis/users/auth/register/", body).pipe(map((response:any)=>response.token)).subscribe(token=>{
     this.authService.setToken(token);
     console.log(token);
-    this.router.navigate(['/dashboard']);
+    //this.router.navigate(['/dashboard']);
     //this.http.get("http://127.0.0.1:8000/apis/users/profile/view/").subscribe((response)=>{console.log(response)});
     },error=>{});
     

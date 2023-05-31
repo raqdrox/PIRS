@@ -11,7 +11,7 @@ import { AuthService } from '../token-service.service';
 })
 export class UpdatepatientComponent implements OnInit {
   oid:number;
-  id:number;
+  
   name:string;
   dob:string;
   gender:string;
@@ -42,7 +42,7 @@ export class UpdatepatientComponent implements OnInit {
   
   Submit() {
     let body={
-    id:this.id,
+    id:this.oid,
     name: this.name,
     dob: this.dob,
     gender:this.gender,

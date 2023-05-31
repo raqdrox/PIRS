@@ -77,7 +77,7 @@ class FingerprintGetAvailableIDView(APIView):
         serializer = PatientIdMappingSerializer(data={'finger_id':foundid,'patient_id':-1})
         if serializer.is_valid():
             serializer.save()
-            return Response({"id":serializer.data.get('finger_id')})
+            return Response({"id":f"{serializer.data.get('finger_id')}"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 

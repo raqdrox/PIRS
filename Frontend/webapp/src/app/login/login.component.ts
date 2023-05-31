@@ -17,7 +17,7 @@ import { Input, Output, EventEmitter } from '@angular/core';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
-  token : any;
+  //token : any;
   loginForm: FormGroup;
   submitted = false;
 
@@ -35,12 +35,21 @@ export class LoginComponent implements OnInit {
   
 
   login() {
+    //this.token=null;
     let body={username:this.email,password:this.password};
     console.log(body);
-    this.http.post("http://127.0.0.1:8000/apis/users/auth/login/", body).pipe(map((response:any)=>response.token)).subscribe(token=>{
+    this.http.post("http://localhost:8000/apis/users/auth/login/", body).pipe(map((response:any)=>response.token)).subscribe(token=>{
     this.authService.setToken(token);
+    
+    if(token != null){
+    alert('Login sucessfull');
 
     this.router.navigate(['/dashboard']);
+    }
+    else{
+      alert('invalid credentials');
+    }
+  
     
     },error=>{});
     
