@@ -15,6 +15,8 @@ class PatientCreateView(generics.CreateAPIView):
 
     def post(self, request):
         serializer = PatientSerializer(data=request.data)
+        
+
         if serializer.is_valid():
             patient = serializer.save(
                     last_updated_by=Profile.objects.get(user=request.user).name,
@@ -43,13 +45,13 @@ class PatientUpdateView(generics.UpdateAPIView):
     queryset = Patient.objects.all()
 
     def put(self, request, *args, **kwargs):
+        #if no patient with this id exists
+        if not Patient.objects.filter(id=kwargs['pk']).exists():
+            return Response('Patient does not exist', status=status.HTTP_400_BAD_REQUEST)
         patient = Patient.objects.get(id=kwargs['pk'])
+
         serializer = PatientSerializer(patient, data=request.data)
         if serializer.is_valid():
-            
-            
-            
-
             patient = serializer.save(
                     last_updated_by=Profile.objects.get(user=request.user).name,
                     last_updated_time=datetime.datetime.now()
@@ -66,7 +68,7 @@ class PatientDeleteView(generics.DestroyAPIView):
         patient = Patient.objects.get(id=kwargs['pk'])
         
         #delete patient id mapping
-        patient_id_mapping = PatientIdMapping.objects.get(id=patient.id)
+        patient_id_mapping = PatientIdMapping.objects.get(patient_id=patient.id)
         patient_id_mapping.delete()
 
         patient.delete()
@@ -89,10 +91,20 @@ class PatientGetByNameView(generics.RetrieveAPIView):
     queryset = Patient.objects.all()
 
     def get(self, request, *args, **kwargs):
-        patient = Patient.objects.filter(name=kwargs['name'])
-        if patient:
+        #filter by name ignoring case and closest match word
+        patient = Patient.objects.filter(name__icontains=kwargs['name'])
+        #if single patient found
+        if patient.count() == 1:
+            serializer = PatientSerializer(patient[0])
+            return Response(serializer.data)
+        #if multiple patients found
+        elif patient.count() > 1:
+            #order by name
+            patient = patient.order_by('name')
             serializer = PatientSerializer(patient, many=True)
             return Response(serializer.data)
+        
+
        
         return Response('Not Found', status=status.HTTP_400_BAD_REQUEST)
     

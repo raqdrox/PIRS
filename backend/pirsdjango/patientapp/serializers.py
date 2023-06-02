@@ -68,11 +68,10 @@ class PatientSerializer(serializers.ModelSerializer):
     #fingerprint_data = FingerprintDataSerializer(partial=True)
     class Meta:
         model = Patient
-        fields = ('id', 'name', 'dob','age', 'gender', 'phone', 'email', 'address','last_updated_time','last_updated_by', 'medical_data', 'emergency_contact')#, 'fingerprint_data')
+        fields = ('name', 'dob','age', 'gender', 'phone', 'email', 'address','last_updated_time','last_updated_by', 'medical_data', 'emergency_contact')#, 'fingerprint_data')
     
     def create(self, validated_data):
         patient= Patient.objects.create(
-            id=validated_data['id'],
             name=validated_data['name'],
             dob=validated_data['dob'],
             gender=validated_data['gender'],
