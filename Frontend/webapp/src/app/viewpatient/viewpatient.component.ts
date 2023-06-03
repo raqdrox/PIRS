@@ -62,6 +62,11 @@ submit2(){
     
     
     }
+    clickRow(row: any) {
+      this.clickedRows.clear();
+      this.clickedRows.add(row);
+      
+      }
   }
 
 
