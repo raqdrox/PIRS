@@ -2,7 +2,7 @@ import datetime
 from django.db import models
 
 class Patient(models.Model):
-    id= models.IntegerField(primary_key=True)
+    id=models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     dob= models.DateField(default=datetime.date.today)
     gender = models.CharField(max_length=100)

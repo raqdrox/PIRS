@@ -42,7 +42,7 @@ bool enrollFingerprint(){
 
     //Get available finger id
     int fingerID = fetchAvailableFingerID()+1;
-    if(fingerID == 0){
+    if(fingerID <= 0){
         Serial.println("Error fetching finger id");
         return false;
     }

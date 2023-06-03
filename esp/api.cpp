@@ -4,13 +4,13 @@
 //----------------API and WIFI----------------
 ESP8266WiFiMulti WiFiMulti;
 
-const char* ssid = "karan";
-const char* password = "qwertyui";
+const char* ssid = "Frost";
+const char* password = "karan@123";
 
-String token="Token 3584c9041e2f100328eded54dd81ef3b32e72fc6";
-String fetch_patient_url = "http://192.168.142.228:8000/apis/mcu/fingerprints/getpatientfromfid/";
-String fetch_available_fingerid_url = "http://192.168.142.228:8000/apis/mcu/fingerprints/getavailableid/";
-String clear_unused_ids = "http://192.168.142.228:8000/apis/mcu/fingerprints/clearunused/";
+String token="Token 4434f448179dc06aed70f970ae83c7ef4ea2dfdd";
+String fetch_patient_url = "http://192.168.1.12:8000/apis/mcu/fingerprints/getpatientfromfid/";
+String fetch_available_fingerid_url = "http://192.168.1.12:8000/apis/mcu/fingerprints/getavailableid/";
+String clear_unused_ids = "http://192.168.1.12:8000/apis/mcu/fingerprints/clearunused/";
 
 //-------------------------------------------
 
