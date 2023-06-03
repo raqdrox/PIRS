@@ -97,8 +97,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pirsdb',
-        'USER': 'dox',
-        'PASSWORD': 'password123',
+        'USER': 'rohan',
+        'PASSWORD': 'abc@abc',
         'HOST': 'localhost',
         'PORT': '3306',
     }

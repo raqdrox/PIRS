@@ -33,6 +33,10 @@ export class UpdateprofileComponent implements OnInit{
   Submit() {
     let body={name:this.name,address:this.address,phone:this.phone,email:this.email};
     console.log(body);
+    if(!this.isPhoneValid()){
+      alert('Invalid Phone Number');
+      return;
+    }
     
     this.http.put("http://127.0.0.1:8000/apis/users/profile/update/",body).subscribe((response)=>{
     this.udata=response;
@@ -40,4 +44,9 @@ export class UpdateprofileComponent implements OnInit{
     
     },error=>{});
 }
+isPhoneValid(){
+  return   this.phone.length==10  && !isNaN(Number(this.phone)) ;
+
+}
+
 }

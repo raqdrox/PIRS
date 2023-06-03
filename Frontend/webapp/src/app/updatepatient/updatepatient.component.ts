@@ -76,17 +76,20 @@ export class UpdatepatientComponent implements OnInit {
     this.add=response;
     if(this.add == "Updated"){
       alert('Patient Record Updated');
+      window.location.reload();
   
       
       }
       else{
         alert('Failed to update patient record');
+        window.location.reload();
       }
       
     
     },error=>{        alert('Failed to update patient record');
+    window.location.reload();
   });
-  window.location.reload();
+  
 }
 
 

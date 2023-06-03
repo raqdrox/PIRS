@@ -71,13 +71,15 @@ export class AddpatientComponent implements OnInit {
     }
     
     this.http.post("http://127.0.0.1:8000/apis/patient/create/",body,{ observe: 'response' }).subscribe(response=>{
-    //this.router.navigate(['/dashboard']);
+   
     console.log(response);
     alert('Patient Added');
+    window.location.reload();
 
-    },error=>{        alert('Failed to add patient');
+    },error=>{       alert('Failed to add patient');
+    window.location.reload();
   });
-  window.location.reload();
+  //window.location.reload();
 
 }
 
