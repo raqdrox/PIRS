@@ -28,6 +28,7 @@ export class LogoutComponent implements OnInit {
     this.http.post("http://127.0.0.1:8000/apis/users/auth/logout/",{}).subscribe((response)=>{
     this.data=response;
     console.log(this.data);
+    alert(this.data)
     this.router.navigate(['']);
     
   

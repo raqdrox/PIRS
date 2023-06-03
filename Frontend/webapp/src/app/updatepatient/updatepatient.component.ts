@@ -67,6 +67,14 @@ export class UpdatepatientComponent implements OnInit {
     
     this.http.put("http://127.0.0.1:8000/apis/patient/update/"+this.oid+"/",body).subscribe((response)=>{
     this.add=response;
+    if(this.add == "Updated"){
+      alert('Patient Record Updated');
+  
+      
+      }
+      else{
+        alert('Failed to update patient record');
+      }
     
     
     },error=>{});
