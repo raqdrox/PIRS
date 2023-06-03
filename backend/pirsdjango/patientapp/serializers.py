@@ -122,5 +122,6 @@ class PatientSerializer(serializers.ModelSerializer):
 
         return super(PatientSerializer, self).update(instance, validated_data)
 
+    
 
     

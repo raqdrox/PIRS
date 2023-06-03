@@ -109,8 +109,11 @@
         
         
         <ul>
+          
           <li *ngFor="let clickedRow of clickedRows">
             <table>
+              <button mat-raised-button color="primary"  (click)="deletePatient(clickedRow.id )">Delete Patient Data</button>
+
   <tr>
     <td>ID:</td>
     <td>{{ clickedRow.id }}</td>
@@ -175,6 +178,7 @@
     <td>Fingerprint Data:</td>
     <td>{{ clickedRow.finger_id }}</td>
   </tr>
+  
 </table>
           </li>
         </ul>

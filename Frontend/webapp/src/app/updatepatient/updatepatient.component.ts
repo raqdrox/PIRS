@@ -28,6 +28,7 @@ export class UpdatepatientComponent implements OnInit {
   phone2:string;
   finger_id:number;
   add:any;
+  fetchedData:any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,6 +65,12 @@ export class UpdatepatientComponent implements OnInit {
     
 };
     console.log(body);
+
+    if(!this.isPhoneValid()){
+      alert('Invalid Phone Number');
+      return;
+      
+    }
     
     this.http.put("http://127.0.0.1:8000/apis/patient/update/"+this.oid+"/",body).subscribe((response)=>{
     this.add=response;
@@ -75,12 +82,43 @@ export class UpdatepatientComponent implements OnInit {
       else{
         alert('Failed to update patient record');
       }
+      
     
-    
-    },error=>{});
+    },error=>{        alert('Failed to update patient record');
+  });
+  window.location.reload();
 }
 
 
+isPhoneValid(){
+  return   this.phone.length==10 && this.phone2.length==10 && !isNaN(Number(this.phone)) && !isNaN(Number(this.phone2));
+
+}
+
+PopulateForm(){
+  this.http.get("http://127.0.0.1:8000/apis/patient/get/"+this.oid+"/").subscribe((response)=>{
+      
+    console.log(response);
+    this.fetchedData=response;
+    this.name=this.fetchedData.name;
+    this.dob=this.fetchedData.dob;
+    this.address=this.fetchedData.address;
+    this.gender=this.fetchedData.gender;
+    this.phone=this.fetchedData.phone;
+    this.email=this.fetchedData.email;
+    this.blood_group=this.fetchedData.medical_data.blood_group;
+    this.diseases=this.fetchedData.medical_data.diseases;
+    this.allergies=this.fetchedData.medical_data.allergies;
+    this.height=this.fetchedData.medical_data.height;
+    this.weight=this.fetchedData.medical_data.weight;
+    this.name2=this.fetchedData.emergency_contact.name;
+    this.phone2=this.fetchedData.emergency_contact.phone;
 
 
+      
+    
+    },error=>{        alert('Failed to fetch patient record');
+}
+);
+}
   }

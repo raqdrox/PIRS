@@ -55,7 +55,8 @@ class PatientUpdateView(generics.UpdateAPIView):
             patient = serializer.save(
                     last_updated_by=Profile.objects.get(user=request.user).name,
                     last_updated_time=datetime.datetime.now()
-                    )
+            )
+
             return Response('Updated', status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -92,17 +93,42 @@ class PatientGetByNameView(generics.RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         #filter by name ignoring case and closest match word
+        
         patient = Patient.objects.filter(name__icontains=kwargs['name'])
+
+
         #if single patient found
         if patient.count() == 1:
             serializer = PatientSerializer(patient[0])
-            return Response(serializer.data)
+
+            serializer_data = serializer.data  
+            finger_id=PatientIdMapping.objects.get(patient_id=patient[0].id).finger_id
+            additional_data = {"id":patient[0].id,"finger_id":finger_id}
+            response_data = {**serializer_data, **additional_data}
+
+
+
+            return Response([response_data])
+        
+
+            
         #if multiple patients found
         elif patient.count() > 1:
             #order by name
-            patient = patient.order_by('name')
             serializer = PatientSerializer(patient, many=True)
-            return Response(serializer.data)
+
+            serializer_data = serializer.data
+            response_data = {}
+            for i in range(len(serializer_data)):
+                finger_id=PatientIdMapping.objects.get(patient_id=patient[i].id).finger_id
+                additional_data = {"id":patient[i].id,"finger_id":finger_id}
+                response_data[i] = {**serializer_data[i], **additional_data}
+
+
+            #convert to list
+            response_data = list(response_data.values())
+
+            return Response(response_data)
         
 
        

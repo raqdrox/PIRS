@@ -44,7 +44,6 @@ export class AddpatientComponent implements OnInit {
   
   Submit() {
     let body={
-    id:this.id,
     name: this.name,
     dob: this.dob,
     gender:this.gender,
@@ -65,26 +64,27 @@ export class AddpatientComponent implements OnInit {
     finger_id:this.finger_id
 };
     console.log(body);
+
+    if(!this.isPhoneValid()){
+      alert('Invalid Phone Number');
+      return;
+    }
     
-    this.http.post("http://127.0.0.1:8000/apis/patient/create/",body).subscribe((response)=>{
-    this.add=response;
+    this.http.post("http://127.0.0.1:8000/apis/patient/create/",body,{ observe: 'response' }).subscribe(response=>{
     //this.router.navigate(['/dashboard']);
-    console.log(this.add)
-    if(this.add == "Created"){
-      alert('Patient Added');
-  
-      
-      }
-      else{
-        alert('Failed to add patient');
-      }
-    
-    },error=>{});
+    console.log(response);
+    alert('Patient Added');
+
+    },error=>{        alert('Failed to add patient');
+  });
+  window.location.reload();
+
 }
 
+isPhoneValid(){
+  return   this.phone.length==10 && this.phone2.length==10 && !isNaN(Number(this.phone)) && !isNaN(Number(this.phone2));
 
-
-
+}
   }
 
 

@@ -36,8 +36,6 @@
       <div class="main">
 
         <form >
-            <label for="id">ID:</label>
-            <input type="number" id="id" name="id" required [(ngModel)] ="id">
             
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required [(ngModel)] ="name">
@@ -55,7 +53,8 @@
             </select>
           
             <label for="phone">Phone Number:</label>
-            <input type="tel" id="phone" name="phone" required [(ngModel)] ="phone">
+            <input type="text" maxlength="10" minlength="10" id="phone" name="phone" required [(ngModel)] ="phone">
+
           
             <label for="email">Email Address:</label>
             <input type="text" id="email" name="email" required [(ngModel)] ="email">
@@ -89,13 +88,13 @@
               <input type="text" id="emergency_contact_name" name="emergency_contact_name" [(ngModel)] ="name2">
           
               <label for="emergency_contact_phone">Phone:</label>
-              <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone"[(ngModel)] ="phone2">
+              <input type="text" maxlength="10" minlength="10"  id="emergency_contact_phone" name="emergency_contact_phone"[(ngModel)] ="phone2">
             </fieldset>
           
             <fieldset>
               <legend>Fingerprint Data:</legend>
               <label for="finger_id">Finger ID:</label>
-              <input type="text" id="finger_id" name="finger_id" [(ngModel)] ="finger_id">
+              <input type="number" id="finger_id" name="finger_id" [(ngModel)] ="finger_id">
             </fieldset>
             <button mat-raised-button color="primary" (click)="Submit()">Submit</button>
             

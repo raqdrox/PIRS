@@ -67,6 +67,14 @@ submit2(){
       this.clickedRows.add(row);
       
       }
+  
+      deletePatient(id:any){
+        this.http.delete("http://127.0.0.1:8000/apis/patient/delete/"+id+"/").subscribe((response)=>{
+          console.log(response);
+          alert("Patient Deleted");
+          window.location.reload();
+      });
+    }
   }
 
 
